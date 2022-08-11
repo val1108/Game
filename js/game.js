@@ -1,3 +1,4 @@
+let keyWord, letterLeft, score, gameOver, underscores, lettersUsed, wrongLetters, letter//, searchBegin, index
 
 const wrongLetterBox = document.querySelector("#wrong-words-box")
 const rightWordsBox = document.querySelector("#right-words-box")
@@ -9,9 +10,13 @@ const finalMsg = document.querySelector("#final-msg-box")
 const secretWordBox = document.querySelector("#secret-word-box")
 
 const canvas = document.querySelector("canvas");
-const pencil = canvas.getContext("2d")
+const ctx = canvas.getContext("2d")
 
-newGameButton.addEventListener("click", () => {animation(createBoardGame)});
+//Capturar evento botones
+
+newGameButton.addEventListener("click", () => {
+    animation(createBoardGame)
+});
 desistButton.addEventListener("click", () => {animation(mainMenu)});
 
 const line1 = document.querySelector("#line1");
@@ -56,8 +61,182 @@ function createKeywoard(){
         line3.appendChild(div)
     }
 }
+
 function createBoardGame(){
     beginSection.style.display = "none";
     gameSection.style.display = "flex";
     newWordSection.style.display = "none";
+
+    
+    keyWord = chooseRandomWord();
+    letterLeft = keyWord.length
+    score = 0
+    gameOver = false
+    lettersUsed = []
+    wrongLetters = []
+    finalMsg.style.display = "none"
+    secretWordBox.style.display = "none"
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawHanged(score)
+    drawUnderscores()
+    createKeywoard()
+
+    underscores = document.querySelectorAll(".underscore")
+
+    console.log(keyWord)
+
+    // escuchador del teclado
+    window.addEventListener("keydown", checkKeyfromPC); // para jugar con PC
+}
+
+function checkLetterFromKeyboard(){
+    let data = (this.textContent).charCodeAt(0)
+    if(!gameOver){
+        // comprobar que la tecla presionada sea una letra
+        if(data >= 65 && data <= 90 || data >= 97 && data <= 122 || data == 209 || data == 241){
+            letter = (this.textContent).toUpperCase();
+            this.classList.add("pressed")
+            checkLetter()
+        }
+    }
+}
+
+function checkLetter(){
+    // comprobar que no se haya usado esa letra
+    if(!lettersUsed.includes(letter)){
+        searchBegin = 0
+        index = keyWord.indexOf(letter, searchBegin)
+        // comprobar que la letra esté en la palabra
+        if(index != -1){
+            console.log()
+            lettersUsed.push(letter)
+            while(index != -1){
+                letterLeft--
+                underscores[index].textContent = letter
+                searchBegin = index +1
+                index = keyWord.indexOf(letter, searchBegin)
+            }
+        }else{
+            console.log()
+            lettersUsed.push(letter)
+            wrongLetters.push(letter)
+            wrongLetterBox.textContent = wrongLetters.join(' ')
+            score++
+            drawHanged(score)
+        }
+        hasWon()
+    }
+}
+
+function checkKeyfromPC(e){
+    if(!gameOver){
+        // comprobar que no haya perdido y que la tecla presionada sea una letra
+        if(e.keyCode >= 65 && e.keyCode <= 90 || e.keyCode == 192){
+            letter = (e.key).toUpperCase();
+            checkLetter()
+            let letterDiv = document.querySelector("#"+letter)
+            letterDiv.classList.add("pressed")
+        }
+    }
+}
+
+function chooseRandomWord(){
+    return wordsList[Math.floor(Math.random() * wordsList.length)];
+}
+
+function drawUnderscores(){
+    rightWordsBox.innerHTML = ""
+    wrongLetterBox.innerHTML = "&nbsp;"
+    for(let i=0; i<keyWord.length; i++){
+        let div = document.createElement("div")
+        div.classList.add("underscore")
+        rightWordsBox.appendChild(div)
+    }
+}
+
+function drawHanged(score){
+    ctx.beginPath();
+    ctx.lineWidth = 6
+    const root = document.querySelector(':root');
+    const rootStyle = getComputedStyle(root);
+    true? ctx.strokeStyle = rootStyle.getPropertyValue('--darkblue'): ctx.strokeStyle = rootStyle.getPropertyValue('--lightblue');
+    switch(score) {
+        case 0:
+            // BASE
+            ctx.moveTo(25, 350);
+            ctx.lineTo(325, 350);
+            // COL
+            ctx.moveTo(105, 0);
+            ctx.lineTo(105, 350);
+            ctx.moveTo(135, 350);
+            ctx.lineTo(105, 320);
+            ctx.moveTo(75, 350);
+            ctx.lineTo(105, 320);
+            // VIGA
+            ctx.moveTo(155, 0);
+            ctx.lineTo(105, 50);
+            ctx.moveTo(257, 3);
+            ctx.lineTo(103, 3);
+            // CUERDA
+            ctx.moveTo(255, 0);
+            ctx.lineTo(255, 50);
+            break;
+        case 1:
+            // CABEZA
+            ctx.arc(255, 80, 30,2*Math.PI,0)
+            break;
+        case 2:
+            // TORSO
+            ctx.moveTo(255, 185);
+            ctx.lineTo(255, 110);
+            break;
+        case 3:
+            // PI_I
+            ctx.moveTo(275, 230);
+            ctx.lineTo(255, 185);
+            break;
+        case 4:
+            // PI_D
+            ctx.moveTo(235, 230);
+            ctx.lineTo(255, 185);
+            break;
+        case 5:
+            // BR_I
+            ctx.moveTo(275, 170);
+            ctx.lineTo(255, 120);
+            break;
+        case 6:
+            // BR_I
+            ctx.moveTo(235, 170);
+            ctx.lineTo(255, 120);
+            break;
+    }
+    ctx.stroke()
+}
+
+function hasWon(){
+    if(letterLeft == 0){
+        gameOverMsg(won=true, keyWord)
+        gameOver = true
+    } else if (score == 6){
+        gameOverMsg(won=false, keyWord)
+        gameOver = true
+    }    
+}
+
+function gameOverMsg(won){
+    finalMsg.style.display = "flex"
+    if(won){
+        finalMsg.classList.remove("red")
+        finalMsg.classList.add("green")
+        finalMsg.textContent = `¡ GANASTE !` //⭐✨🌟💫🏮🎎🎉🎊🎈🎀 ❌✅❗❕😁😄😄
+    } else {
+        finalMsg.classList.remove("green")
+        finalMsg.classList.add("red")
+        finalMsg.textContent = `¡ FIN DEL JUEGO ! ` // 😈👻💩🤡💀☠️🥴😵😥😨😰😓😥
+
+        secretWordBox.style.display = "flex"
+        secretWordBox.textContent = `La palabra secreta era: ${keyWord} 😵`
+    }
 }

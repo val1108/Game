@@ -1,0 +1,23 @@
+let wordsList = [
+    "JAVASCRIPT",
+    "CURSO",
+    "JUEGO",
+    "LETRAS",
+    "INOCENTE",
+    "ALURA",
+    "ORACLE",
+    "RETO",
+    "INSIGNIA",
+    "LISTA",
+    "CSS",
+    "HTML",
+    "PROGRAMACION",
+    "CERTIFICADO",
+    "TIC",
+    "TECNOLOGIA",
+    "MUNDO",
+    "LENGUAJE",
+    "FRONTEND",
+    "BACKEND",
+    "DISEÑO"
+];

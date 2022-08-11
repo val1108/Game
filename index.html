@@ -8,31 +8,34 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="reset.css" />
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="css/reset.css" />
+        <link rel="stylesheet" href="css/style.css" />
         <title>Juego del ahorcado</title>
         
     </head>
     <body>
-        <main>
+        <div id="screen" class="screen-one"></div>
+        
+        <main class="flex-col-space">
 
-            <section class="buttons-begin" >
-                <button id="play-game" class="button blue"> Iniciar juego &nbsp;🕹️</button>  
-                <button id="add-new-word" class="button grey">Agregar nueva palabra</button>
+            <section id="buttons-begin" class="flex-col-center">
+                <button id="play-game" class="button_blue"> Iniciar juego &nbsp;🕹️</button>  
+                <button id="add-new-word" class="button_grey">Agregar nueva palabra</button>
             </section>
 
-            <section class="new-word-section">
+            <section id="new-word-section" class="flex-col-center">
                 <input id="new-word-input" type="text" placeholder="Escribe una palabra ...">
                 <div class="warning">
                     <p>🚫 Máximo 14 caracteres</p>
                 </div>
+                <div id="confirm-new-word"></div>
                 <div id="buttons-new-word">
-                    <button id="new-word-save" class="button blue">Guardar &nbsp;📝</button>
-                    <button id="new-word-cancel" class="button grey">Empezar a jugar &nbsp;🕹️</button>
+                    <button id="new-word-save" class="button_blue">Guardar &nbsp;📝</button>
+                    <button id="new-word-cancel" class="button_grey">Empezar a jugar &nbsp;🕹️</button>
                 </div>
             </section>
 
-            <section class="game-section">
+            <section id="game-section" class="flex-col-center">
                 <div id="hanged-box">
                     <canvas width="355" height="355"></canvas>
                     <div id="final-msg-box" class="flex-col-center"></div>
@@ -49,13 +52,18 @@
                 </div>
 
                 <div id="game-buttons-box">
-                    <button id="new-game" class="button blue">Nuevo juego 🕹️</button>
-                    <button id="desist" class="button grey">Desistir 😶</button>
+                    <button id="new-game" class="button_blue">Nuevo juego 🕹️</button>
+                    <button id="desist" class="button_grey">Desistir 😶</button>
                 </div>
             </section>
         </main>
     </body>
-    <footer id="footer-line">
+    <footer id="footer-line" class="flex-col-center">
         <p>Challenge Alura - Juego del ahorcado by Valeria Sanchez</p>
     </footer>
+
+    <script src="js/game.js"></script>
+    <script src="js/listaPalabras.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/saveWord.js"></script>
 </html>     
