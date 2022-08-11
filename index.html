@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+
+        <meta charset="UTF-8" />        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="reset.css" />
+        <link rel="stylesheet" href="style.css" />
+        <title>Juego del ahorcado</title>
+        
+    </head>
+    <body>
+        <main>
+
+            <section class="buttons-begin" >
+                <button id="play-game" class="button blue"> Iniciar juego &nbsp;🕹️</button>  
+                <button id="add-new-word" class="button grey">Agregar nueva palabra</button>
+            </section>
+
+            <section class="new-word-section">
+                <input id="new-word-input" type="text" placeholder="Escribe una palabra ...">
+                <div class="warning">
+                    <p>🚫 Máximo 14 caracteres</p>
+                </div>
+                <div id="buttons-new-word">
+                    <button id="new-word-save" class="button blue">Guardar &nbsp;📝</button>
+                    <button id="new-word-cancel" class="button grey">Empezar a jugar &nbsp;🕹️</button>
+                </div>
+            </section>
+
+            <section class="game-section">
+                <div id="hanged-box">
+                    <canvas width="355" height="355"></canvas>
+                    <div id="final-msg-box" class="flex-col-center"></div>
+                </div>
+
+                <div id="right-words-box" class="flex-col-center"></div>
+                <div id="wrong-words-box" class="flex-col-center"></div>
+                <div id="secret-word-box" class="flex-col-center"></div>
+
+                <div id="keyboard-box">
+                    <div id="line1" class="flex-row-center"></div>
+                    <div id="line2" class="flex-row-center"></div>
+                    <div id="line3" class="flex-row-center"></div>
+                </div>
+
+                <div id="game-buttons-box">
+                    <button id="new-game" class="button blue">Nuevo juego 🕹️</button>
+                    <button id="desist" class="button grey">Desistir 😶</button>
+                </div>
+            </section>
+        </main>
+    </body>
+    <footer id="footer-line">
+        <p>Challenge Alura - Juego del ahorcado by Valeria Sanchez</p>
+    </footer>
+</html>     
